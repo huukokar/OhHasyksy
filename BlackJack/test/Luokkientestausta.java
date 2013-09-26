@@ -42,7 +42,7 @@ public class Luokkientestausta {
     // The methods must be annotated with annotation @Test. For example:
     //
      @Test
-     public void hello() {
+     public void kortinTestausta() {
          Korttipakkakokoelma testikokoelma = new Korttipakkakokoelma("Testaan vain");
          Korttipakka testipakka = new Korttipakka(testikokoelma, "tuPakka");
          Kortti testikortti = new Kortti(testipakka, 1, 5);

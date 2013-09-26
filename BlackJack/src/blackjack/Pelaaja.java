@@ -13,14 +13,22 @@ public class Pelaaja {
     private int raha;
     private String nimi;
     private double promillet;
-    private int paikat;
+    
     
     public Pelaaja(int raha, String nimi, double promillet, int paikat){
         
         this.raha = raha;
         this.nimi = nimi;
         this.promillet = promillet;
-        this.paikat = paikat;
+        
+    }
+    
+    public void vahennaRahaa(int maara){
+        this.raha = this.raha - maara;
+    }
+    
+    public void lisaaRahaa(int maara){
+        this.raha = this.raha + maara;
     }
     
     public String getNimi(){

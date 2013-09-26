@@ -9,5 +9,5 @@ package blackjack;
  * @author huukokar
  */
 public enum Maa {
-    RUUTU, PATA, RISTI, HERTTA
+    RUUTU, HERTTA, RISTI, PATA
 }

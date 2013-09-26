@@ -22,11 +22,11 @@ public class Kortti {
         if (maa == 0) {
             return "Ruutu";
         } else if (maa == 1) {
-            return  "Pata";
+            return  "Hertta";
         } else if (maa == 2) {
             return "Risti";
         }
-        return "Hertta";
+        return "Pata";
     }
     
     private String kortinArvo() {
@@ -65,4 +65,20 @@ public class Kortti {
         
     }
     
+    public Korttipakka getKorttipakka(){
+        return this.korttipakka;
+    }
+    
+    public String getKorttipakanNimi(){
+        String korttipakanNimi = this.korttipakka.getNimi();
+        return korttipakanNimi;
+    }
+    
+    public int getArvo(){
+        return this.arvo;            
+    }
+    
+    public int getMaa(){
+        return this.maa;
+    }
 }
