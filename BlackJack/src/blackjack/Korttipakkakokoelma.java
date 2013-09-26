@@ -38,7 +38,7 @@ public class Korttipakkakokoelma  {
         
     }
     
-    public Kortti getKortti(int arvo){
+   
         public Kortti getKortti(int arvo){
           // löydä oikea kortti, 0-52 eka pakka, 53-104 toka pakka... jokaisessa jaettu maan mukaan palautus.
             if(arvo > 0 && arvo <= 52){
@@ -125,4 +125,4 @@ public class Korttipakkakokoelma  {
         return null;
     }
     }
-}
+

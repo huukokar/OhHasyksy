@@ -60,7 +60,7 @@ public class Kortti {
     }
     @Override
     public String toString(){
-        String merkkijono = "Kortti on " + maanNimi() + kortinArvo() + " ja sen omistaja on" + this.korttipakka;
+        String merkkijono = "Kortti on " + maanNimi() + kortinArvo() + " ja sen omistaja on" + getKorttipakanNimi();
         return merkkijono;
         
     }
