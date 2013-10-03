@@ -28,6 +28,12 @@ public class Paikka {
     public void liitaPelaajaPaikalle(Pelaaja pelaaja){
         this.pelaaja = pelaaja;
     }
+    public Pelaaja getPelaaja(){
+        if (this.pelaaja == null){
+            return null;
+        }
+        return this.pelaaja;
+    }
     
     public void panosta(int maara){
         this.panos = this.panos + maara;

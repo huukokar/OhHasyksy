@@ -48,7 +48,7 @@ public class Pelaaja {
     
     public void asetaPanos(Paikka paikka, int maara){
         this.raha = this.raha - maara;
-        paikka.maaritaPanos(maara);
+        paikka.panosta(maara);
     }
     
 }
