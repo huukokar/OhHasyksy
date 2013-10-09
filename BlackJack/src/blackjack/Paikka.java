@@ -4,6 +4,8 @@
  */
 package blackjack;
 
+import java.util.ArrayList;
+
 
 /**
  *
@@ -15,18 +17,26 @@ public class Paikka {
     private int panos;
     private int korttienSumma;
     private int vaihtoehtoSumma;
+    private int paikanNumero;
+    private ArrayList<Kortti> paikanKortit;
+    private boolean voittaakoPelaaja;
     
-    public Paikka(int panos){
+    public Paikka(int paikanNumero){
         this.pelaaja = null;
-        
-        this.panos = panos;
+        this.paikanNumero = paikanNumero;
+        this.panos = 0;
         this.korttienSumma = 0;
         this.vaihtoehtoSumma = 0;
+        this.paikanKortit = new ArrayList<Kortti>();
         
     }
     
     public void liitaPelaajaPaikalle(Pelaaja pelaaja){
         this.pelaaja = pelaaja;
+    }
+    
+    public void poistaPelaaja(){
+        this.pelaaja = null;
     }
     public Pelaaja getPelaaja(){
         if (this.pelaaja == null){
@@ -39,6 +49,26 @@ public class Paikka {
         this.panos = this.panos + maara;
         
     }
+    
+    public void pelaajaVoitti(){
+        
+        //voittaako pelaaja kierroksen
+        this.voittaakoPelaaja = true;
+        
+    }
+    
+    public void pelaajaHavisi(){
+        // häviääkö pelaaja kierroksen
+        this.voittaakoPelaaja = false;
+    }
+    
+    public void tyhjennaPanos(){
+        this.panos = 0;
+        this.korttienSumma = 0;
+        this.vaihtoehtoSumma = 0;
+        tyhjennaKortit();
+    }
+    
     
     public void ensimmaisetKortit(Kortti kortti, Kortti toinenKortti){
         
@@ -70,6 +100,8 @@ public class Paikka {
     }     
     public void nostaKortti(Kortti kortti){
         
+        this.paikanKortit.add(kortti);
+        
         if (kortti.getArvo() <= 10){
             this.korttienSumma = this.korttienSumma + 10;
         } else if (kortti.getArvo() > 1){
@@ -93,7 +125,26 @@ public class Paikka {
         // plus kaikki ässän kanssa kikkailut
     }
     
+    public void tyhjennaKortit(){
+        ArrayList<Kortti> uudetKortit = new ArrayList<Kortti>();
+        this.paikanKortit = uudetKortit;
+        
+    }
+    
     public void lopetaNostaminen(){
         //itsensä selittävä
     }
+    
+    public int getKorttienSumma(){
+        return this.korttienSumma;
+    }
+    public int getVaihtoehtoSumma(){
+        return this.vaihtoehtoSumma;
+    }
+    
+    public int getPanos(){
+        return this.panos;
+    }
+    
+        
 }

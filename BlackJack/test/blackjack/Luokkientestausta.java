@@ -59,7 +59,9 @@ public class Luokkientestausta {
          Kortti patakuningas = testikokoelma.getKortti(416);
          assertEquals("Kortti on Patakuningas, ja sen omistaja on Kahdeksas Korttipakka", patakuningas.toString());
          Kortti herttaassa = testikokoelma.getKortti(53);
-         assertEquals("Kortti on Herttaassa, ja sen omistaja on Toka Korttipakka", herttaassa.toString0
+         assertEquals("Kortti on Herttaässä, ja sen omistaja on Toka Korttipakka", herttaassa.toString());
+         Kortti ristiseiska = testikokoelma.getKortti(33);
+         assertEquals("Kortti on Ristiseiska, ja sen omistaja on Eka Korttipakka", ristiseiska.toString());
                  
      }
 }
