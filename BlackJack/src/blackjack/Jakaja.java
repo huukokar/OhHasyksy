@@ -15,10 +15,12 @@ import java.util.Random;
 public class Jakaja {
     // private int maksimiPaikat;
     private String nimi;
-    private Korttipakkakokoelma korttipakat;
-    private HashMap<Integer, Paikka> paikat;
+    private final Korttipakkakokoelma korttipakat;
+    private final HashMap<Integer, Paikka> paikat;
     private ArrayList<Integer> kaytetytKortit;
-    private Paikka jakajanPaikka;
+    private final Paikka jakajanPaikka;
+    private final HashMap<Integer, Pelaaja> pelaajat;
+    // Jakajan toinen kortti on piilotettu, ensimmmäisessä paikassa oleva näkyy
     
     public Jakaja(String nimi){
        // this.maksimiPaikat = maksimiPaikat;
@@ -27,9 +29,56 @@ public class Jakaja {
         this.paikat = new HashMap<Integer, Paikka>();
         luoPaikat();
         this.jakajanPaikka = new Paikka(0);
+        this.pelaajat = new HashMap<Integer, Pelaaja>();
         
         
     }
+    
+    public final void luoPelaaja(String nimi){
+        
+        if (this.pelaajat.isEmpty()){
+            Pelaaja pelaaja =  new Pelaaja(2500, nimi);
+            this.pelaajat.put(1, pelaaja);
+            } 
+        }
+    
+    public final void luoPelaajat(String ekaNimi, String tokaNimi){
+        
+        if (this.pelaajat.isEmpty()){
+            Pelaaja ekaPelaaja = new Pelaaja(2500, ekaNimi);
+            this.pelaajat.put(1, ekaPelaaja);
+            Pelaaja tokaPelaaja = new Pelaaja(2500, tokaNimi);
+            this.pelaajat.put(2, tokaPelaaja);
+        }
+    }
+    
+    public final void luoPelaajat(String ekaNimi, String tokaNimi, String kolmasNimi){
+        
+        if (this.pelaajat.isEmpty()){
+            Pelaaja ekaPelaaja = new Pelaaja(2500, ekaNimi);
+            this.pelaajat.put(1, ekaPelaaja);
+            Pelaaja tokaPelaaja = new Pelaaja(2500, tokaNimi);
+            this.pelaajat.put(2, tokaPelaaja);
+            Pelaaja kolmasPelaaja = new Pelaaja(2500, kolmasNimi);
+            this.pelaajat.put(3, kolmasPelaaja);
+        }
+    }
+    
+    public final void luoPelaajat(String ekaNimi, String tokaNimi, String kolmasNimi, String neljasNimi){
+        
+        if (this.pelaajat.isEmpty()){
+        Pelaaja ekaPelaaja = new Pelaaja(2500, ekaNimi);
+        this.pelaajat.put(1, ekaPelaaja);
+        Pelaaja tokaPelaaja = new Pelaaja(2500, tokaNimi);
+        this.pelaajat.put(2, tokaPelaaja);
+        Pelaaja kolmasPelaaja = new Pelaaja(2500, kolmasNimi);
+        this.pelaajat.put(3, kolmasPelaaja);
+        Pelaaja neljasPelaaja = new Pelaaja(2500, neljasNimi);
+        this.pelaajat.put(4, neljasPelaaja);
+        }
+    }
+    
+    
     
     public final void luoPaikat(){
          
@@ -92,9 +141,16 @@ public class Jakaja {
     }
     
     public void pelaajaHaviaa(int paikanNumero){
-        this.paikat.get(paikanNumero).tyhjennaPanos();
-        this.paikat.get(paikanNumero).pelaajaHavisi();
-      
+        
+        if(this.paikat.get(paikanNumero).onkoPelaajaVakuutettu() == false){
+            this.paikat.get(paikanNumero).tyhjennaPanos();
+            this.paikat.get(paikanNumero).pelaajaHavisi();
+        } else {
+            Pelaaja pelaaja = this.paikat.get(paikanNumero).getPelaaja();
+            Paikka pelaajanPaikka = this.paikat.get(paikanNumero);
+            pelaajanPaikka.pelaajaHavisi();
+            vakuutettuPelaajaHaviaa(pelaaja, pelaajanPaikka);
+        }
     }
     
     public void pelaajaVoittaa(int paikanNumero){
@@ -114,13 +170,49 @@ public class Jakaja {
         }
         
     }
+    
+    public void pelaajaTuplaa(Pelaaja pelaaja, Paikka paikka){
         
-        public void vakuutaPelaaja(Pelaaja pelaaja){
-            // vakuutetaan pelaaja, jos jakajalla on ässä
+        if((paikka.getKorttienSumma() <= 9 || paikka.getKorttienSumma() >= 11) && paikka.getKorttienMaara() == 2){
+            int nykyinenPanos = paikka.getPanos();
+            pelaaja.vahennaRahaa(nykyinenPanos);
+            paikka.tuplaaPanos();
+            // tuplauksessa pelaajalle annetaan vain 1 kortti, jonka jälkeen hän ei voi nostaa lisää
+            Kortti vikaKortti = arvoKortti();
+            paikka.nostaKortti(vikaKortti);
         }
+              
+    }
+    
+   public void pelaajaLuovuttaa(Pelaaja pelaaja, Paikka paikka){
+       // ns. Surrender, eli 2 ensimmäisen kortin jälkeen pelaaja luovuttaa, ja saa puolet panoksesta takaisin
+       if(paikka.getKorttienMaara() == 2){
+           int nykyinenPanos = paikka.getPanos();
+           pelaaja.lisaaRahaa(nykyinenPanos / 2);
+           paikka.tyhjennaPanos();
+           paikka.pelaajaHavisi();
+           
+       }
+       
+   }
+    
+    
+    
+    public void vakuutaPelaaja(Pelaaja pelaaja, Paikka paikka){
+            // vakuutetaan pelaaja, jos jakajalla on ässä
         
-        public void vakuutettuPelaajaHaviaa(Pelaaja pelaaja){
-            // vakuutettu pelaaja saa osan panoksestaan takaisin, vaikka häviääkin
+        // tarkistaa, onko Jakajalla ässä näkyvässä paikassa (toinen kortti on piilotettu)
+        if (this.jakajanPaikka.ekaKorttiOnAssa() == true){
+            int nykyinenPanos = paikka.getPanos();
+            pelaaja.vahennaRahaa(nykyinenPanos / 2);
+            
+        }
+    }
+        
+    public void vakuutettuPelaajaHaviaa(Pelaaja pelaaja, Paikka paikka){
+            
+        int lopullinenPanos = paikka.getPanos();
+        pelaaja.lisaaRahaa(lopullinenPanos);
             
         }
         

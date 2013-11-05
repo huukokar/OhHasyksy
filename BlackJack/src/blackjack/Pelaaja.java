@@ -18,12 +18,12 @@ public class Pelaaja {
     private ArrayList<Paikka> paikat;
     
     
-    public Pelaaja(int raha, String nimi, int paikat){
+    public Pelaaja(int raha, String nimi){
         
         this.raha = raha;
         this.nimi = nimi;
        // this.promillet = promillet;
-        this.paikat = new ArrayList<Paikka>();
+       
         
     }
     
@@ -60,6 +60,11 @@ public class Pelaaja {
         this.paikat = uudetPaikat;
         
         
+    }
+    
+    public void lisaaPaikka(Paikka paikka){
+        this.paikat.add(paikka);
+        paikka.liitaPelaajaPaikalle(this);
     }
     
     

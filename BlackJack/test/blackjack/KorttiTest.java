@@ -16,13 +16,15 @@ import static org.junit.Assert.*;
  *
  * @author Huksi
  */
-public class Luokkientestausta {
+public class KorttiTest {
 //    import blackjack.BlackJack;
 //    import blackjack.Kortti;
 //    import blackjack.Korttipakka;
 //    import blackjack.Korttipakkakokoelma;
     
-    public Luokkientestausta() {
+    // tällä testaankin vain Kortti-luokkaa, nimi jäänyt a
+    
+    public KorttiTest() {
     }
     
     @BeforeClass
@@ -63,5 +65,29 @@ public class Luokkientestausta {
          Kortti ristiseiska = testikokoelma.getKortti(33);
          assertEquals("Kortti on Ristiseiska, ja sen omistaja on Eka Korttipakka", ristiseiska.toString());
                  
+     }
+     
+     public void korttiPalauttaaOikeatArvot(){
+         Korttipakkakokoelma testikokoelma = new Korttipakkakokoelma("Testikokoelma");
+         Korttipakka testipakka = new Korttipakka(testikokoelma, "Testipakka 1");
+         Kortti herttakutonen = new Kortti(testipakka, 1, 6);
+         assertEquals("Kortti on Herttakutonen, ja sen omistaja on Testipakka 1", herttakutonen.toString());
+         assertEquals(1, herttakutonen.getMaa());
+         assertEquals(6, herttakutonen.getArvo());
+         
+         Kortti ristikolmonen = new Kortti(testipakka, 2, 3);
+         assertEquals("Kortti on Ristikolmonen, ja sen omistaja on Testipakka 1", ristikolmonen.toString());
+         assertEquals(2, ristikolmonen.getMaa());
+         assertEquals(3, ristikolmonen.getArvo());
+         
+         Kortti pataassa = new Kortti(testipakka, 3, 1);
+         assertEquals("Kortti on Pataässä, ja sen omistaja on Testipakka 1", pataassa.toString());
+         assertEquals(2, pataassa.getMaa());
+         assertEquals(1, pataassa.getArvo());
+         
+         Kortti ruutukymppi = new Kortti(testipakka, 0, 10);
+         assertEquals("Kortti on Ruutukymppi, ja sen omistaja on Testipakka 1", ruutukymppi.toString());
+         assertEquals(0, ruutukymppi.getMaa());
+         assertEquals(10, ruutukymppi.getArvo());
      }
 }

@@ -20,6 +20,8 @@ public class Paikka {
     private int paikanNumero;
     private ArrayList<Kortti> paikanKortit;
     private boolean voittaakoPelaaja;
+    private boolean onkoVakuutettu;
+    
     
     public Paikka(int paikanNumero){
         this.pelaaja = null;
@@ -28,6 +30,8 @@ public class Paikka {
         this.korttienSumma = 0;
         this.vaihtoehtoSumma = 0;
         this.paikanKortit = new ArrayList<Kortti>();
+        this.onkoVakuutettu = false;
+        
         
     }
     
@@ -62,6 +66,14 @@ public class Paikka {
         this.voittaakoPelaaja = false;
     }
     
+    public boolean voittikoPelaaja(){
+    if (this.voittaakoPelaaja = true){
+           return true;
+        } else {
+            return false;
+        }
+}
+    
     public void tyhjennaPanos(){
         this.panos = 0;
         this.korttienSumma = 0;
@@ -69,8 +81,14 @@ public class Paikka {
         tyhjennaKortit();
     }
     
+    public void tuplaaPanos(){
+        this.panos = this.panos * 2;
+    }
+    
     
     public void ensimmaisetKortit(Kortti kortti, Kortti toinenKortti){
+        
+        //käytännössä turhaa koodia, ei käytetä
         
         if (kortti.getArvo() <= 10){
             this.korttienSumma = this.korttienSumma + 10;
@@ -102,6 +120,7 @@ public class Paikka {
         
         this.paikanKortit.add(kortti);
         
+        
         if (kortti.getArvo() <= 10){
             this.korttienSumma = this.korttienSumma + 10;
         } else if (kortti.getArvo() > 1){
@@ -131,6 +150,10 @@ public class Paikka {
         
     }
     
+    public boolean onkoPelaajaVakuutettu(){
+        return this.onkoVakuutettu;
+    }
+    
     public void lopetaNostaminen(){
         //itsensä selittävä
     }
@@ -144,6 +167,19 @@ public class Paikka {
     
     public int getPanos(){
         return this.panos;
+    }
+    
+    public int getKorttienMaara(){
+        int kortteja = this.paikanKortit.size();
+        return kortteja;
+    }
+    
+    public boolean ekaKorttiOnAssa(){
+        // Jakajan paikkaa varten, käytetään silloin kun halutaan tietää onko näkyvä kortti ässä (vakuutusta varten
+        if (this.paikanKortit.get(1).getArvo() == 1){
+            return true;
+        } 
+        return false;
     }
     
         

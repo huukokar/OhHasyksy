@@ -9,5 +9,5 @@ package blackjack;
  * @author huukokar
  */
 public enum KortinArvo {
-    ÄSSÄ, KAKKONEN, KOLMONEN, NELONEN, VITONEN, KUTONEN, SEISKA, KASI, YSI, KYMPPI, JÄTKÄ, KUNINGATAR, KUNINGAS
+    ässä, kakkonen, kolmonen, nelonen, vitonen, kutonen, seiska, kasi, ysi, kymppi, jätkä, kuningatar, kuningas
 }
